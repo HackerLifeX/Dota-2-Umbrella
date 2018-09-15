@@ -19,10 +19,11 @@ function AutoUse.OnUpdate()
 	
 	local bottle = NPC.GetItem(myHero, "item_bottle")
    
-	if NPC.HasModifier(myHero, "modifier_fountain_aura_buff") and Ability.IsReady(bottle) and
-	Entity.GetHealth(myHero) < Entity.GetMaxHealth(myHero) or NPC.GetMana(myHero) < NPC.GetMaxMana(myHero) then
+	if bottle NPC.HasModifier(myHero, "modifier_fountain_aura_buff") and Ability.IsReady(bottle) then 
+	if Entity.GetHealth(myHero) < Entity.GetMaxHealth(myHero) or NPC.GetMana(myHero) < NPC.GetMaxMana(myHero)
 	    Ability.CastNoTarget(bottle) 
-	end
-end
+	    end
+    end
+end 
 	
 return AutoUse
