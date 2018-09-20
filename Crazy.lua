@@ -6,6 +6,7 @@ CrazyX.AutoUsePhaseBoots = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItem
 CrazyX.AutoDisableOrchid = Menu.AddOptionBool({"Utility", "CrazyX", "Disabler"}, "Orchid", true)
 CrazyX.AutoDisableBloodthorn = Menu.AddOptionBool({"Utility", "CrazyX", "Disabler"}, "Bloodthorn", true)
 CrazyX.AutoDisableHex = Menu.AddOptionBool({"Utility", "CrazyX", "Disabler"}, "Hex", true)
+CrazyX.AutoDisableCyclone = Menu.AddOptionBool({"Utility", "CrazyX", "Disabler"}, "Eul's", true)
 
 function CrazyX.OnUpdate()
 myHero = Heroes.GetLocal()
@@ -15,6 +16,7 @@ phaseboots = NPC.GetItem(myHero, "item_phase_boots")
 orchid = NPC.GetItem(myHero, "item_orchid")
 hex = NPC.GetItem(myHero, "item_sheepstick")
 bloodthorn = NPC.GetItem(myHero, "item_bloodthorn")
+cyclone = NPC.GetItem(myHero, "item_cyclone")
 enemy = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
 
 if not Menu.IsEnabled(CrazyX.optionEnable) then 
@@ -38,7 +40,11 @@ if Menu.IsEnabled(CrazyX.AutoDisableBloodthorn) then
 end
 	
 if Menu.IsEnabled(CrazyX.AutoDisableHex) then
-		CrazyX.AutoDisableEnemyHex()
+	CrazyX.AutoDisableEnemyHex()
+end
+	
+if Menu.IsEnabled(CrazyX.AutoDisableCyclone) then
+		CrazyX.AutoDisableEnemyCyclone()
 	end
 end
 
@@ -73,6 +79,12 @@ end
 function CrazyX.AutoDisableEnemyHex()
 	if hex and enemy and Ability.IsReady(hex) and Ability.IsCastable(hex, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then
 		Ability.CastTarget(hex, enemy)
+	end
+end
+
+function CrazyX.AutoDisableEnemyCyclone()
+	if cyclone and enemy and Ability.IsReady(cyclone) and Ability.IsCastable(cyclone, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then
+		Ability.CastTarget(cyclone, enemy)
 	end
 end
 
