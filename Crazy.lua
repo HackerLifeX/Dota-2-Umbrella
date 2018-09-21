@@ -82,7 +82,9 @@ end
 
 function CrazyX.AutoPhaseBoots()
 	if phaseboots and Ability.IsReady(phaseboots) and NPC.IsRunning(myHero) then 
-		Ability.CastNoTarget(phaseboots)
+		if not NPC.HasState(myHero, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) then
+			Ability.CastNoTarget(phaseboots)
+		end
 	end
 end
 
