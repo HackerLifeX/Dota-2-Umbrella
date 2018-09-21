@@ -6,6 +6,7 @@ CrazyX.AutoUsePhaseBoots = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItem
 CrazyX.AutoUseButterfly = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Butterfly", true)
 CrazyX.AutoUseStick = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Magic Stick", true)
 CrazyX.AutoUseWand = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Magic Wand", true)
+CrazyX.ESP = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "ESP", true)
 
 Menu.AddOptionIcon(CrazyX.optionEnable, "panorama/images/items/branches_png.vtex_c")
 Menu.AddOptionIcon(CrazyX.AutoUseBottle, "panorama/images/items/bottle_png.vtex_c")
@@ -16,13 +17,21 @@ Menu.AddOptionIcon(CrazyX.AutoUseWand, "panorama/images/items/magic_wand_png.vte
 
 function CrazyX.OnUpdate()
 myHero = Heroes.GetLocal()
+
 myMana = NPC.GetMana(myHero)
 bottle = NPC.GetItem(myHero, "item_bottle")
 phaseboots = NPC.GetItem(myHero, "item_phase_boots")
 butterfly = NPC.GetItem(myHero, "item_butterfly")
 stick = NPC.GetItem(myHero, "item_magic_stick")
 wand = NPC.GetItem(myHero, "item_magic_wand")
-enemy = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+
+------------------------------------------
+for i = 1, Heroes.Count() do
+		enemyX = Heroes.Get(i)          -------ЭТО ВРАГ ДЛЯ ESP
+enemyPos = Entity.GetAbsOrigin(enemyX)
+myPos = Entity.GetAbsOrigin(myHero)
+------------------------------------------
+
 
 if not Menu.IsEnabled(CrazyX.optionEnable) then 
 	return
@@ -44,10 +53,16 @@ if Menu.IsEnabled(CrazyX.AutoUseStick) then
 	CrazyX.AutoStick()
 end
 
-	if Menu.IsEnabled(CrazyX.AutoUseWand) then
-		CrazyX.AutoWand()
+if Menu.IsEnabled(CrazyX.AutoUseWand) then
+	CrazyX.AutoWand()
+end
+
+	if Menu.IsEnabled(CrazyX.ESP) then
+			CrazyX.OnDraw()
+		end
 	end
 end
+
 
 function CrazyX.AutoBottle()
 	if NPC.HasModifier(myHero, "modifier_fountain_aura_buff") and Ability.IsReady(bottle) then
@@ -67,7 +82,6 @@ function CrazyX.AutoPhaseBoots()
 	end
 end
 
-
 function CrazyX.AutoButterfly()
 	if butterfly and Ability.IsReady(butterfly) and NPC.IsRunning(myHero) then 
 		if not NPC.HasState(myHero, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) then
@@ -82,10 +96,20 @@ function CrazyX.AutoStick()
 	end
 end
 
-
 function CrazyX.AutoWand()
 	if wand and Ability.IsReady(wand) and Item.GetCurrentCharges(wand) > 0 and Entity.GetHealth(myHero) < 80 then
 		Ability.CastNoTarget(wand)
+	end
+end
+
+function CrazyX.OnDraw()
+xp, yp, visible = Renderer.WorldToScreen(myPos)
+	xz, yz = Renderer.WorldToScreen(enemyPos)
+
+if visible then
+	Renderer.SetDrawColor(255, 0, 0)                             
+	Renderer.DrawFilledRect(xp - 5, yp - 5, 10, 10)
+	Renderer.DrawLine(xz, yz, xp, yp)
 	end
 end
 
