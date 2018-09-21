@@ -86,7 +86,6 @@ function CrazyX.AutoPhaseBoots()
 	end
 end
 
-
 function CrazyX.AutoStick()
 	if stick and Ability.IsReady(stick) and Item.GetCurrentCharges(stick) > 0 and Entity.GetHealth(myHero) < 80 then
 		Ability.CastNoTarget(stick)
@@ -102,25 +101,33 @@ end
 
 function CrazyX.AutoDisableEnemyOrchid()
 	if orchid and enemy and Ability.IsReady(orchid) and Ability.IsCastable(orchid, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then
-		Ability.CastTarget(orchid, enemy)
+		if not NPC.HasModifier(enemy, "modifier_bloodthorn_debuff") and not NPC.HasModifier(enemy, "modifier_sheepstick_debuff") and not NPC.HasModifier(enemy, "modifier_orchid_malevolence_debuff") and not NPC.HasModifier(enemy, "modifier_eul_cyclone") then
+			Ability.CastTarget(orchid, enemy)
+		end
 	end
 end
 
 function CrazyX.AutoDisableEnemyBloodthorn()
 	if bloodthorn and enemy and Ability.IsReady(bloodthorn) and Ability.IsCastable(bloodthorn, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then
-		Ability.CastTarget(bloodthorn, enemy)
+		if not NPC.HasModifier(enemy, "modifier_bloodthorn_debuff") and not NPC.HasModifier(enemy, "modifier_sheepstick_debuff") and not NPC.HasModifier(enemy, "modifier_orchid_malevolence_debuff") and not NPC.HasModifier(enemy, "modifier_eul_cyclone") then
+			Ability.CastTarget(bloodthorn, enemy)
+		end
 	end
 end
 	
 function CrazyX.AutoDisableEnemyHex()
 	if hex and enemy and Ability.IsReady(hex) and Ability.IsCastable(hex, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then
-		Ability.CastTarget(hex, enemy)
+		if not NPC.HasModifier(enemy, "modifier_bloodthorn_debuff") and not NPC.HasModifier(enemy, "modifier_sheepstick_debuff") and not NPC.HasModifier(enemy, "modifier_orchid_malevolence_debuff") and not NPC.HasModifier(enemy, "modifier_eul_cyclone") then
+			Ability.CastTarget(hex, enemy)
+		end
 	end
 end
 
 function CrazyX.AutoDisableEnemyCyclone()
-	if cyclone and enemy and Ability.IsReady(cyclone) and Ability.IsCastable(cyclone, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then
-		Ability.CastTarget(cyclone, enemy)
+	if cyclone and enemy and Ability.IsReady(cyclone) and Ability.IsCastable(cyclone, myMana) and NPC.IsEntityInRange(myHero, enemy, 600) then 
+		if not NPC.HasModifier(enemy, "modifier_bloodthorn_debuff") and not NPC.HasModifier(enemy, "modifier_sheepstick_debuff") and not NPC.HasModifier(enemy, "modifier_orchid_malevolence_debuff") and not NPC.HasModifier(enemy, "modifier_eul_cyclone") then
+			Ability.CastTarget(cyclone, enemy)
+		end
 	end
 end
 
