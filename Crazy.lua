@@ -7,7 +7,6 @@ CrazyX.AutoUseButterfly = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems
 CrazyX.AutoUseStick = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Magic Stick", true)
 CrazyX.AutoUseWand = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Magic Wand", true)
 
-
 Menu.AddOptionIcon(CrazyX.optionEnable, "panorama/images/items/branches_png.vtex_c")
 Menu.AddOptionIcon(CrazyX.AutoUseBottle, "panorama/images/items/bottle_png.vtex_c")
 Menu.AddOptionIcon(CrazyX.AutoUsePhaseBoots, "panorama/images/items/phase_boots_png.vtex_c")
@@ -24,14 +23,6 @@ phaseboots = NPC.GetItem(myHero, "item_phase_boots")
 butterfly = NPC.GetItem(myHero, "item_butterfly")
 stick = NPC.GetItem(myHero, "item_magic_stick")
 wand = NPC.GetItem(myHero, "item_magic_wand")
-
-------------------------------------------
-for i = 1, Heroes.Count() do
-		enemyX = Heroes.Get(i)          -------ЭТО ВРАГ ДЛЯ ESP
-enemyPos = Entity.GetAbsOrigin(enemyX)
-myPos = Entity.GetAbsOrigin(myHero)
-------------------------------------------
-
 
 if not Menu.IsEnabled(CrazyX.optionEnable) then 
 	return
@@ -62,7 +53,6 @@ end
 		end
 	end
 end
-
 
 function CrazyX.AutoBottle()
 	if NPC.HasModifier(myHero, "modifier_fountain_aura_buff") and Ability.IsReady(bottle) then
