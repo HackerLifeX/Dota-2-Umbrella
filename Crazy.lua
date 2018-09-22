@@ -48,10 +48,8 @@ if Menu.IsEnabled(CrazyX.AutoUseWand) then
 	CrazyX.AutoWand()
 end
 
-	if Menu.IsEnabled(CrazyX.ESP) then
-			CrazyX.OnDraw()
-		end
-	end
+
+	
 end
 
 function CrazyX.AutoBottle()
