@@ -6,7 +6,7 @@ CrazyX.AutoUsePhaseBoots = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItem
 CrazyX.AutoUseButterfly = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Butterfly", true)
 CrazyX.AutoUseStick = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Magic Stick", true)
 CrazyX.AutoUseWand = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "Magic Wand", true)
-CrazyX.ESP = Menu.AddOptionBool({"Utility", "CrazyX", "AutoUseItems"}, "ESP", true)
+
 
 Menu.AddOptionIcon(CrazyX.optionEnable, "panorama/images/items/branches_png.vtex_c")
 Menu.AddOptionIcon(CrazyX.AutoUseBottle, "panorama/images/items/bottle_png.vtex_c")
@@ -99,17 +99,6 @@ end
 function CrazyX.AutoWand()
 	if wand and Ability.IsReady(wand) and Item.GetCurrentCharges(wand) > 0 and Entity.GetHealth(myHero) < 80 then
 		Ability.CastNoTarget(wand)
-	end
-end
-
-function CrazyX.OnDraw()
-xp, yp, visible = Renderer.WorldToScreen(myPos)
-	xz, yz = Renderer.WorldToScreen(enemyPos)
-
-if visible then
-	Renderer.SetDrawColor(255, 0, 0)                             
-	Renderer.DrawFilledRect(xp - 5, yp - 5, 10, 10)
-	Renderer.DrawLine(xz, yz, xp, yp)
 	end
 end
 
