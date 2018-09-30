@@ -1,90 +1,146 @@
-local AutoUseX = {}
+local Tiny = {}
 
-AutoUseX.optionEnable = Menu.AddOptionBool({"Utility", "AutoUseX"}, "Activation", true)
-AutoUseX.AutoUseBottle = Menu.AddOptionBool({"Utility", "AutoUseX", "AutoUseItems"}, "Bottle", true)
-AutoUseX.AutoUsePhaseBoots = Menu.AddOptionBool({"Utility", "AutoUseX", "AutoUseItems"}, "Phase Boots", true)
-AutoUseX.AutoUseButterfly = Menu.AddOptionBool({"Utility", "AutoUseX", "AutoUseItems"}, "Butterfly", true)
-AutoUseX.AutoUseStick = Menu.AddOptionBool({"Utility", "AutoUseX", "AutoUseItems"}, "Magic Stick", true)
-AutoUseX.AutoUseWand = Menu.AddOptionBool({"Utility", "AutoUseX", "AutoUseItems"}, "Magic Wand", true)
+Tiny.ScriptON = Menu.AddOptionBool({"Hero Specific", "Tiny"}, "Enable", false)
+Tiny.ComboKey = Menu.AddKeyOption({ "Hero Specific", "Tiny" }, "Combo Key", Enum.ButtonCode.BUTTON_CODE_NONE)
+Tiny.TossEnemyKey = Menu.AddKeyOption({ "Hero Specific", "Tiny" }, "TossEnemy Key", Enum.ButtonCode.BUTTON_CODE_NONE)
+Tiny.BlinkCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "Blink", false)
+Tiny.BKBCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "BKB", false)
+Tiny.OrchidCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "Orchid", false)
+Tiny.BloodthornCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "Bloodthorn", false)
+Tiny.HexCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "Hex", false)
+Tiny.NullifierCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "Nullifier", false)
+Tiny.VeilCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Items"}, "Veil of Discord", false)
+Tiny.TossCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Toss", false)
+Tiny.AvalancheCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Avalanche", false)
+Tiny.TreeCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Tree", false)
 
-Menu.AddOptionIcon(AutoUseX.optionEnable, "panorama/images/items/branches_png.vtex_c")
-Menu.AddOptionIcon(AutoUseX.AutoUseBottle, "panorama/images/items/bottle_png.vtex_c")
-Menu.AddOptionIcon(AutoUseX.AutoUsePhaseBoots, "panorama/images/items/phase_boots_png.vtex_c")
-Menu.AddOptionIcon(AutoUseX.AutoUseButterfly, "panorama/images/items/butterfly_png.vtex_c")
-Menu.AddOptionIcon(AutoUseX.AutoUseStick, "panorama/images/items/magic_stick_png.vtex_c")
-Menu.AddOptionIcon(AutoUseX.AutoUseWand, "panorama/images/items/magic_wand_png.vtex_c")
+Menu.AddOptionIcon(Tiny.TossCombo, "panorama/images/spellicons/tiny_toss_png.vtex_c")
+Menu.AddOptionIcon(Tiny.AvalancheCombo, "panorama/images/spellicons/tiny_avalanche_png.vtex_c")
+Menu.AddOptionIcon(Tiny.TreeCombo, "panorama/images/spellicons/tiny_toss_tree_png.vtex_c")
+Menu.AddOptionIcon(Tiny.BKBCombo, "panorama/images/items/black_king_bar_png.vtex_c")
+Menu.AddOptionIcon(Tiny.OrchidCombo, "panorama/images/items/orchid_png.vtex_c")
+Menu.AddOptionIcon(Tiny.BloodthornCombo, "panorama/images/items/bloodthorn_png.vtex_c")
+Menu.AddOptionIcon(Tiny.HexCombo, "panorama/images/items/sheepstick_png.vtex_c")
+Menu.AddOptionIcon(Tiny.BlinkCombo, "panorama/images/items/blink_png.vtex_c")
+Menu.AddOptionIcon(Tiny.NullifierCombo, "panorama/images/items/nullifier_png.vtex_c")
+Menu.AddOptionIcon(Tiny.VeilCombo, "panorama/images/items/veil_of_discord_png.vtex_c")
 
-function AutoUseX.OnUpdate()
+
+
+function Tiny.OnUpdate()
+
 myHero = Heroes.GetLocal()
+enemy = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+enemyPos = Entity.GetAbsOrigin(enemy)
+myTeamPOS = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_FRIEND)
+Blink = NPC.GetItem(myHero, "item_blink")
+BKB = NPC.GetItem(myHero, "item_black_king_bar")
+Toss = NPC.GetAbility(myHero, "tiny_toss")
+Orchid = NPC.GetItem(myHero, "item_orchid")
+Bloodthorn = NPC.GetItem(myHero, "item_bloodthorn")
+Sheepstick = NPC.GetItem(me, "item_sheepstick")
+Nullifier = NPC.GetItem(me, "item_nullifier")
+Veildiscord = NPC.GetItem(me, "item_veil_of_discord")
+Avalanche = NPC.GetAbility(myHero, "tiny_avalanche")
+treetoss = NPC.GetAbility(myHero, "tiny_toss_tree")
 
-myMana = NPC.GetMana(myHero)
-bottle = NPC.GetItem(myHero, "item_bottle")
-phaseboots = NPC.GetItem(myHero, "item_phase_boots")
-butterfly = NPC.GetItem(myHero, "item_butterfly")
-stick = NPC.GetItem(myHero, "item_magic_stick")
-wand = NPC.GetItem(myHero, "item_magic_wand")
-
-if not Menu.IsEnabled(AutoUseX.optionEnable) then 
-	return
-end
-
-if Menu.IsEnabled(AutoUseX.AutoUseBottle) then
-	AutoUseX.AutoBottle()
-end
-
-if Menu.IsEnabled(AutoUseX.AutoUsePhaseBoots) then
-	AutoUseX.AutoPhaseBoots()
-end
-
-if Menu.IsEnabled(AutoUseX.AutoUseButterfly) then
-	AutoUseX.AutoButterfly()
-end
-
-if Menu.IsEnabled(AutoUseX.AutoUseStick) then
-	AutoUseX.AutoStick()
-end
-
-	if Menu.IsEnabled(AutoUseX.AutoUseWand) then
-		AutoUseX.AutoWand()
+	if not Menu.IsEnabled(Tiny.ScriptON) then
+		return
+	end
+	
+	if not Engine.IsInGame() then
+		return
+	end
+	
+	if Menu.IsKeyDownOnce(Tiny.TossEnemyKey) then
+		Tiny.TossEnemyTeam()
+	end
+	
+	if Menu.IsKeyDownOnce(Tiny.ComboKey) then
+		Tiny.UseCombo()
 	end
 end
 
-function AutoUseX.AutoBottle()
-	if bottle and NPC.HasModifier(myHero, "modifier_fountain_aura_buff") and Ability.IsReady(bottle) then
-		if Entity.GetHealth(myHero) < Entity.GetMaxHealth(myHero) or NPC.GetMana(myHero) < NPC.GetMaxMana(myHero) then
-			if not NPC.HasModifier(myHero, "modifier_bottle_regeneration") and not NPC.IsChannellingAbility(myHero) then 	
-				Ability.CastNoTarget(bottle) 
-			end
+function Tiny.UseCombo()
+	if Menu.IsEnabled(Tiny.BKBCombo) then
+		if BKB and Ability.IsReady(BKB) then
+				Ability.CastNoTarget(BKB)
+			return
+		end
+	end	
+
+	if Menu.IsEnabled(Tiny.BlinkCombo) then
+		if Blink and Ability.IsReady(Blink) then
+				Ability.CastPosition(Blink, enemyPos)
+			return
+		end
+	end
+	
+	if Menu.IsEnabled(Tiny.HexCombo) then
+		if Sheepstick and Ability.IsReady(Sheepstick) then
+				Ability.CastTarget(Sheepstick, enemy)
+			return
+		end
+	end	
+	
+	if Menu.IsEnabled(Tiny.VeilCombo) then
+		if Veildiscord and Ability.IsReady(Veildiscord) then
+				Ability.CastPosition(Veildiscord, enemyPos)
+			return
+		end
+	end
+	
+	if Menu.IsEnabled(Tiny.OrchidCombo) then
+		if Orchid and Ability.IsReady(Orchid) then
+				Ability.CastTarget(Orchid, enemy)
+			return
+		end
+	end	
+	
+	if Menu.IsEnabled(Tiny.BloodthornCombo) then
+		if Bloodthorn and Ability.IsReady(Bloodthorn) then
+				Ability.CastTarget(Bloodthorn, enemy)
+			return
+		end
+	end	
+	
+	if Menu.IsEnabled(Tiny.TossCombo) then
+		if Toss and Ability.IsReady(Toss) then
+				Ability.CastTarget(Toss, enemy)
+			return
+		end
+	end	
+
+	if Menu.IsEnabled(Tiny.AvalancheCombo) then
+		if Avalanche and Ability.IsReady(Avalanche) then
+				Ability.CastPosition(Avalanche, enemyPos)
+			return
+		end
+	end
+	
+	if Menu.IsEnabled(Tiny.NullifierCombo) then
+		if Nullifier and Ability.IsReady(Nullifier) then
+				Ability.CastTarget(Nullifier, enemy)
+			return
+		end
+	end	
+	
+	if Menu.IsEnabled(Tiny.TreeCombo) then
+		if treetoss and Ability.IsReady(treetoss) then
+				Ability.CastTarget(treetoss, enemy)
+			return
+		end
+	end	
+end
+
+function Tiny.TossEnemyTeam()
+	if Toss and enemy and myHero and myTeamPOS then
+		Ability.CastPosition(Blink, enemyPos)
+		if NPC.IsEntityInRange(myHero, myTeamPOS, Ability.GetCastRange(Toss)) then
+			Ability.CastTarget(Toss, myTeamPOS)
+			return
 		end
 	end
 end
-
-function AutoUseX.AutoPhaseBoots()
-	if phaseboots and Ability.IsReady(phaseboots) and NPC.IsRunning(myHero) then 
-		if not NPC.HasState(myHero, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) then
-			Ability.CastNoTarget(phaseboots)
-		end
-	end
-end
-
-function AutoUseX.AutoButterfly()
-	if butterfly and Ability.IsReady(butterfly) and NPC.IsRunning(myHero) then 
-		if not NPC.HasState(myHero, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) then
-			Ability.CastNoTarget(butterfly)
-		end
-	end
-end
-
-function AutoUseX.AutoStick()
-	if stick and Ability.IsReady(stick) and Item.GetCurrentCharges(stick) > 0 and Entity.GetHealth(myHero) < 80 then
-		Ability.CastNoTarget(stick)
-	end
-end
-
-function AutoUseX.AutoWand()
-	if wand and Ability.IsReady(wand) and Item.GetCurrentCharges(wand) > 0 and Entity.GetHealth(myHero) < 80 then
-		Ability.CastNoTarget(wand)
-	end
-end
-
-return AutoUseX
+		
+return Tiny 
