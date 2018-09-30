@@ -25,8 +25,6 @@ Menu.AddOptionIcon(Tiny.BlinkCombo, "panorama/images/items/blink_png.vtex_c")
 Menu.AddOptionIcon(Tiny.NullifierCombo, "panorama/images/items/nullifier_png.vtex_c")
 Menu.AddOptionIcon(Tiny.VeilCombo, "panorama/images/items/veil_of_discord_png.vtex_c")
 
-
-
 function Tiny.OnUpdate()
 
 myHero = Heroes.GetLocal()
