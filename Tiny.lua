@@ -14,6 +14,19 @@ Tiny.TossCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"},
 Tiny.AvalancheCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Avalanche", false)
 Tiny.TreeCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Tree", false)
 
+Menu.AddOptionIcon(Tiny.TossCombo, "panorama/images/spellicons/tiny_toss_png.vtex_c")
+Menu.AddOptionIcon(Tiny.AvalancheCombo, "panorama/images/spellicons/tiny_avalanche_png.vtex_c")
+Menu.AddOptionIcon(Tiny.TreeCombo, "panorama/images/spellicons/tiny_toss_tree_png.vtex_c")
+Menu.AddOptionIcon(Tiny.BKBCombo, "panorama/images/items/black_king_bar_png.vtex_c")
+Menu.AddOptionIcon(Tiny.OrchidCombo, "panorama/images/items/orchid_png.vtex_c")
+Menu.AddOptionIcon(Tiny.BloodthornCombo, "panorama/images/items/bloodthorn_png.vtex_c")
+Menu.AddOptionIcon(Tiny.HexCombo, "panorama/images/items/sheepstick_png.vtex_c")
+Menu.AddOptionIcon(Tiny.BlinkCombo, "panorama/images/items/blink_png.vtex_c")
+Menu.AddOptionIcon(Tiny.NullifierCombo, "panorama/images/items/nullifier_png.vtex_c")
+Menu.AddOptionIcon(Tiny.VeilCombo, "panorama/images/items/veil_of_discord_png.vtex_c")
+
+
+
 function Tiny.OnUpdate()
 
 myHero = Heroes.GetLocal()
