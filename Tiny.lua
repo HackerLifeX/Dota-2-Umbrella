@@ -15,12 +15,13 @@ Tiny.AvalancheCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Abili
 Tiny.TreeCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Tree", false)
 
 function Tiny.OnUpdate()
+
 myHero = Heroes.GetLocal()
 enemy = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
 enemyPos = Entity.GetAbsOrigin(enemy)
 myTeamPOS = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_FRIEND)
 Blink = NPC.GetItem(myHero, "item_blink")
-BKB =  NPC.GetItem(myHero, "item_black_king_bar")
+BKB = NPC.GetItem(myHero, "item_black_king_bar")
 Toss = NPC.GetAbility(myHero, "tiny_toss")
 Orchid = NPC.GetItem(myHero, "item_orchid")
 Bloodthorn = NPC.GetItem(myHero, "item_bloodthorn")
@@ -31,6 +32,10 @@ Avalanche = NPC.GetAbility(myHero, "tiny_avalanche")
 treetoss = NPC.GetAbility(myHero, "tiny_toss_tree")
 
 	if not Menu.IsEnabled(Tiny.ScriptON) then
+		return
+	end
+	
+	if not Engine.IsInGame() then
 		return
 	end
 	
