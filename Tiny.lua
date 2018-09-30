@@ -14,6 +14,7 @@ Tiny.TossCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"},
 Tiny.AvalancheCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Avalanche", false)
 Tiny.TreeCombo = Menu.AddOptionBool({"Hero Specific", "Tiny", "Use", "Ability"}, "Tree", false)
 
+Menu.AddMenuIcon({"Hero Specific", "Tiny"}, "panorama/images/heroes/icons/npc_dota_hero_tiny_png.vtex_c")
 Menu.AddOptionIcon(Tiny.TossCombo, "panorama/images/spellicons/tiny_toss_png.vtex_c")
 Menu.AddOptionIcon(Tiny.AvalancheCombo, "panorama/images/spellicons/tiny_avalanche_png.vtex_c")
 Menu.AddOptionIcon(Tiny.TreeCombo, "panorama/images/spellicons/tiny_toss_tree_png.vtex_c")
